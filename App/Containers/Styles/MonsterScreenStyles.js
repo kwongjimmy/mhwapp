@@ -1,25 +1,76 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+  monsterScreenContainer: {
+    flex: 1,
+    backgroundColor: '#191919'
+  },
+  monsterHeaderContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+  },
+  monsterHeaderTextContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 5,
+    borderColor: 'white',
+    paddingTop: 5,
+  },
+  monsterHeaderText: {
+    fontSize: 15,
+    color: '#191919',
+    textAlign: 'center',
+  },
+  monsterListContainer: {
+    flex: 10.5
+  },
+  monsterFlatList: {
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: '#191919'
+  },
   monsterContainer: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingTop: 10,
-    paddingBottom: 10,
-    borderBottomWidth: 1,
-    borderColor: 'black'
+  },
+  monsterTouchContainer: {
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginTop: 0,
+    marginBottom: 10,
+    marginLeft: 7.5,
+    marginRight: 7.5,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#191919',
+    backgroundColor: 'white',
+  },
+  monsterTextContainer: {
+    flex: 2,
   },
   monsterText: {
-    flex: 2,
-    fontSize: 20,
-    color: 'black',
-    // borderWidth: 1
+    flex: 1,
+    fontSize: 22,
+    color: '#191919',
+  },
+  monsterTypeText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#464646',
   },
   monsterImageContainer: {
     flex: 1,
     // borderWidth: 1,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   monsterImage: {
     height: 65,
@@ -28,18 +79,17 @@ export default StyleSheet.create({
   monsterHitContainer: {
     flex: 1,
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   monsterHitText: {
     flex: 1,
     fontSize: 10,
-    color: 'black',
+    color: '#191919',
   },
   monsterExtractContainer: {
-    flex: 0.5,
     borderRadius: 25,
-    height: 15,
-    // marginTop: 5,
-    justifyContent: 'center',
+    height: 10,
+    marginRight: 2.5,
+    marginLeft: 2.5,
   }
 });

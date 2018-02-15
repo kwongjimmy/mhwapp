@@ -9,7 +9,7 @@ import styles from './Styles/MonsterScreenStyles'
 
 export default class MonsterInfoScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: navigation.state.params.monster_name,
+    // title: navigation.state.params.monster_name,
     // header: navigation => ({
     //   style: {
     //     height: 80,
@@ -36,12 +36,6 @@ export default class MonsterInfoScreen extends Component {
     };
     let db = SQLite.openDatabase({name: 'mhw.db', createFromLocation : "~mhworld.db", location: 'Library'});
     db.transaction((tx) => {
-      // tx.executeSql('SELECT * FROM monster WHERE monster_id = ?', [this.props.navigation.state.params.monster_id], (tx, results) => {
-      //   // Get rows with Web SQL Database spec compliance.
-      //   // console.log(results);
-      //   let row = results.rows.item(0);
-      //   console.log(row);
-      // });
       var monster_hit = [];
       var monster_loot = [];
       monster_hit.push({
@@ -59,7 +53,6 @@ export default class MonsterInfoScreen extends Component {
         first: true,
       });
       tx.executeSql('SELECT * FROM monster_hit WHERE monster_id = ?', [this.props.navigation.state.params.monster_id], (tx, results) => {
-        // Get rows with Web SQL Database spec compliance.
         for(let i = 0; i < results.rows.length; i++) {
           let row = results.rows.item(i);
           monster_hit.push(row);
@@ -72,7 +65,7 @@ export default class MonsterInfoScreen extends Component {
         loot.category_id,
         cat.rank,
         cat.name,
-        items.name,
+        items.name as item_name,
         items.rarity,
         loot.quantity
         FROM monster_loot as loot
@@ -90,8 +83,11 @@ export default class MonsterInfoScreen extends Component {
   }
 
   renderMonsterLoot = ({ item }) => {
+    console.log(item);
     return (
-      <Text>Hi</Text>
+      <View style={{ flex: 1, }}>
+        <Text>{item.item_name}</Text>
+      </View>
     );
   }
 
@@ -131,24 +127,28 @@ export default class MonsterInfoScreen extends Component {
       </View>
     );
   }
- render() {
-   console.log(this.state.monster_loot);
-   return (
-     <View style={{ flex: 1 }}>
-       <FlatList
-         style={{ flex:1 }}
-         data={this.state.monster_hit}
-         keyExtractor={(item) => item.part_name}
-         renderItem={this.renderMonsterHit}
-       />
-       <FlatList
-         style={{ flex:1 }}
-         data={this.state.monster_loot}
-         keyExtractor={(item) => item.loot_id}
-         renderItem={this.renderMonsterLoot}
-       />
-     </View>
-  );
- }
 
+  render() {
+    return (
+      // <View style={{ flex: 1 }}>
+      //   <FlatList
+      //     style={{ flexGrow:1 }}
+      //     data={this.state.monster_hit}
+      //     keyExtractor={(item) => item.part_name}
+      //     renderItem={this.renderMonsterHit}
+      //   />
+      //   <FlatList
+      //     style={{ flexGrow:1 }}
+      //     data={this.state.monster_loot}
+      //     keyExtractor={(item) => item.loot_id}
+      //     renderItem={this.renderMonsterLoot}
+      //   />
+      // </View>
+      <ScrollView>
+        <View>
+
+        </View>
+      </ScrollView>
+   );
+  }
 }

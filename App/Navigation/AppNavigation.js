@@ -22,14 +22,14 @@ const Monsters = StackNavigator(
     mode: 'modal',
     navigationOptions: {
       headerStyle: {
-        backgroundColor: 'black',
+        backgroundColor: 'white',
       },
       headerTitleStyle: {
           fontWeight: '300',
-          color: 'white',
+          color: 'black',
           fontSize: 20,
       },
-      headerTintColor: 'white',
+      headerTintColor: 'black',
     },
   },
 );
@@ -62,10 +62,10 @@ const Monsters = StackNavigator(
 
 const PrimaryNav = TabNavigator({
   Monsters: { screen: Monsters },
-  Equipment: { screen: LaunchScreen },
-  Quests: { screen: LaunchScreen },
+  Equips: { screen: LaunchScreen },
   Items: { screen: LaunchScreen },
-  Map: { screen: LaunchScreen },
+  Quests: { screen: LaunchScreen },
+  Misc: { screen: LaunchScreen },
   }, {
   // Default config for all screens
   // headerMode: 'none',
@@ -78,17 +78,19 @@ const PrimaryNav = TabNavigator({
   // animationEnabled: false,
   animationEnabled: true,
   tabBarOptions: {
-    activeTintColor: 'white',
+    activeTintColor: '#191919',
+    inactiveTintColor: '#191919',
     labelStyle: {
-      fontSize: 7,
+      fontSize: 8.5,
+      color: '#191919',
     },
     style: {
-      backgroundColor: 'black',
+      backgroundColor: 'white',
     },
     indicatorStyle: {
-      backgroundColor: 'white'
+      backgroundColor: 'red'
     },
-    backBehavior: 'none',
+    // backBehavior: 'none',
   },
 });
 
