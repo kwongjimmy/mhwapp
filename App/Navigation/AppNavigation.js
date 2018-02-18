@@ -9,9 +9,6 @@ const Monsters = StackNavigator(
   {
     Monsters: {
       screen : MonsterScreen,
-      navigationOptions: ({ navigation }) => ({
-          title: 'Monsters',
-      }),
     },
     MonsterInfo: {
       screen : MonsterInfoScreen,
@@ -34,7 +31,7 @@ const Monsters = StackNavigator(
   },
 );
 
-// const Monsters = TabNavigator({
+// const Monsterss = TabNavigator({
 //   Large: { screen: MonsterScreen },
 //   Small: { screen: MonsterScreen },
 //   All: { screen: MonsterScreen},
@@ -70,14 +67,15 @@ const PrimaryNav = TabNavigator({
   // Default config for all screens
   // headerMode: 'none',
   initialRouteName: 'Monsters',
-  navigationOptions: {
-    headerStyle: styles.header
-  },
+  // navigationOptions: {
+  //   headerStyle: styles.header
+  // },
   tabBarPosition: 'bottom',
-  swipeEnabled: true,
-  // animationEnabled: false,
-  animationEnabled: true,
+  swipeEnabled: false,
+  animationEnabled: false,
+  // animationEnabled: true,
   tabBarOptions: {
+    showIcon: false,
     activeTintColor: '#191919',
     inactiveTintColor: '#191919',
     labelStyle: {
@@ -88,7 +86,8 @@ const PrimaryNav = TabNavigator({
       backgroundColor: 'white',
     },
     indicatorStyle: {
-      backgroundColor: 'red'
+      // backgroundColor: 'red',
+      backgroundColor: 'white'
     },
     // backBehavior: 'none',
   },
@@ -97,10 +96,95 @@ const PrimaryNav = TabNavigator({
 // const Root = StackNavigator(
 //   {
 //     nav: { screen: PrimaryNav },
-//     stack: { screen: stack},
+//     stack: { screen: LaunchScreen},
 //   },
 //   {
 //     initialRouteName: 'nav',
+//     headerMode: 'none'
+//   }
+// );
+
+// const Root = StackNavigator(
+//   {
+//     // loginFlow: {
+//     //   screen: StackNavigator({
+//     //     splash: { screen: LaunchScreen },
+//     //     login: { screen: LaunchScreen },
+//     //     forgotPassword: { screen: LaunchScreen }
+//     //   })
+//     // },
+//     mainFlow: {
+//       screen: TabNavigator(
+//       {
+//         equip: { screen: LaunchScreen },
+//         item: { screen: LaunchScreen },
+//         misc: { screen: LaunchScreen },
+//         quest: {
+//           screen: StackNavigator({
+//             someTab: {
+//               screen: TabNavigator
+//               (
+//                 {
+//                   Monsters: { screen: Monsters },
+//                   Monsters1: { screen: Monsters },
+//                   Monsters2: { screen: Monsters },
+//                 },
+//                 {
+//                 }
+//               )
+//             },
+//             MonnsterInfo: { screen: MonsterInfoScreen },
+//             secondTab: { screen: LaunchScreen },
+//             thirdTab: { screen: LaunchScreen }
+//           })
+//         },
+//         monster: {
+//           screen: StackNavigator({
+//             someTab: {
+//               screen: TabNavigator
+//               (
+//                 {
+//                   Monsters: { screen: Monsters },
+//                   Monsters1: { screen: Monsters },
+//                   Monsters2: { screen: Monsters },
+//                 },
+//                 {
+//                 }
+//               )
+//             },
+//             MonnsterInfo: { screen: MonsterInfoScreen },
+//             secondTab: { screen: LaunchScreen },
+//             thirdTab: { screen: LaunchScreen }
+//           })
+//         }
+//       },
+//       {
+//         headerMode: 'none',
+//         header: null,
+//         tabBarPosition: 'bottom',
+//         swipeEnabled: false,
+//         animationEnabled: false,
+//         tabBarOptions: {
+//           showIcon: false,
+//           activeTintColor: '#191919',
+//           inactiveTintColor: '#191919',
+//           labelStyle: {
+//             fontSize: 8.5,
+//             color: '#191919',
+//           },
+//           style: {
+//             backgroundColor: 'white',
+//           },
+//           indicatorStyle: {
+//             backgroundColor: 'red'
+//           },
+//         }
+//       },
+//       )
+//     }
+//   },
+//   {
+//     initialRouteName: 'mainFlow',
 //     headerMode: 'none'
 //   }
 // );

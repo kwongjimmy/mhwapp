@@ -3,7 +3,8 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   monsterScreenContainer: {
     flex: 1,
-    backgroundColor: '#191919'
+    // backgroundColor: '#191919'
+    backgroundColor: 'white',
   },
   monsterHeaderContainer: {
     flex: 1,
@@ -19,22 +20,41 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    borderBottomWidth: 5,
+    borderBottomWidth: 3,
     borderColor: 'white',
     paddingTop: 5,
   },
+  monsterHeaderTextContainerSelected: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderBottomWidth: 3,
+    borderColor: 'red',
+    paddingTop: 5,
+  },
   monsterHeaderText: {
+    fontSize: 15,
+    color: '#5e5e5e',
+    textAlign: 'center',
+  },
+  monsterHeaderTextSelected: {
     fontSize: 15,
     color: '#191919',
     textAlign: 'center',
   },
   monsterListContainer: {
-    flex: 10.5
+    flex: 10.5,
+    // marginLeft: 7.5,
+    // marginRight: 7.5,
   },
   monsterFlatList: {
     flex: 1,
-    paddingTop: 10,
-    backgroundColor: '#191919'
+    // paddingTop: 10,
+    // backgroundColor: '#191919'
+    // backgroundColor: 'white'
+  },
+  monsterFlatListContext: {
+    // paddingBottom: 10,
   },
   monsterContainer: {
     flex: 1,
@@ -54,17 +74,27 @@ export default StyleSheet.create({
     borderColor: '#191919',
     backgroundColor: 'white',
   },
+  monsterTouchContainer2: {
+    flex: 1,
+    borderBottomWidth: 0,
+    paddingTop: 2.5,
+    paddingBottom: 2.5,
+    borderColor: '#191919',
+    backgroundColor: 'white',
+  },
   monsterTextContainer: {
-    flex: 2,
+    flex: 3,
+    marginTop: 5,
+    marginBottom: 5,
   },
   monsterText: {
     flex: 1,
-    fontSize: 22,
+    fontSize: 20,
     color: '#191919',
   },
   monsterTypeText: {
     flex: 1,
-    fontSize: 13,
+    fontSize: 12,
     color: '#464646',
   },
   monsterImageContainer: {
@@ -76,20 +106,8 @@ export default StyleSheet.create({
     height: 65,
     width: 65,
   },
-  monsterHitContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  monsterHitText: {
-    flex: 1,
-    fontSize: 10,
-    color: '#191919',
-  },
-  monsterExtractContainer: {
-    borderRadius: 25,
-    height: 10,
-    marginRight: 2.5,
-    marginLeft: 2.5,
+  monsterImage2: {
+    height: 60,
+    width: 60,
   }
 });
