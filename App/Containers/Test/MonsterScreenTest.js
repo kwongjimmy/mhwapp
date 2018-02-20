@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image, View, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { ScrollView, Text, Image, View, FlatList, TouchableOpacity, TouchableHighlight, Dimensions } from 'react-native'
 import SQLite from 'react-native-sqlite-storage'
-import { connect } from 'react-redux'
+import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
 
 import { MonsterImages } from '../Themes'
-
+import MonsterList from './MonsterList'
 // Styles
 import styles from './Styles/MonsterScreenStyles'
 
-// let SQLite = require('react-native-sqlite-storage')
-// let db = SQLite.openDatabase({name: 'petDB', createFromLocation : "~pet.db"}, this.openCB, this.errorCB);
-// let db = SQLite.openDatabase({name: 'test.db', createFromLocation : "~example.db", location: 'Library'}, this.openCB, this.errorCB);
-// var db = SQLite.openDatabase({name: 'test.db', createFromLocation : '~pet.db'});
+const initialLayout = {
+  height: 0,
+  width: Dimensions.get('window').width,
+};
 
-class MonsterScreen extends Component {
+export default class MonsterScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     header: null,
     headerMode: 'none',
@@ -25,9 +25,12 @@ class MonsterScreen extends Component {
       allMonsters: [],
       smallMonsters: [],
       largeMonsters: [],
-      all: true,
-      large: false,
-      small: false,
+      index: 0,
+      routes: [
+        { key: 'first', title: 'All' },
+        { key: 'second', title: 'Large' },
+        { key: 'third', title: 'Small' },
+      ],
     };
     // SQLite.openDatabase({name: 'mhworld.db', createFromLocation : "~mhworld.db", location: 'Default'});
     // let db = SQLite.openDatabase({name: 'mhworld.db', createFromLocation : '~mhworld.db', location: 'Default'}, this.okCallback, this.errorCallback);
@@ -40,6 +43,7 @@ class MonsterScreen extends Component {
   errorCallback(test) {
     console.log(test);
   }
+
   componentWillMount() {
     // // DELETE FROM IOS
     // SQLite.deleteDatabase({name: 'mhworld.db', location: 'Default'}, this.okCallback, this.errorCallback);
@@ -88,16 +92,12 @@ class MonsterScreen extends Component {
   componentWillUnmount() {
     // db.close();
   }
-
-  toggleHeader(text) {
-    if(text === 'all' && !this.state.all) {
-      this.setState({ all: true, large: false, small: false });
-    } else if(text === 'large' && !this.state.large) {
-      this.setState({ all: false, large: true, small: false });
-    } else if(text === 'small' && !this.state.small) {
-      this.setState({ all: false, large: false, small: true });
-    }
-  }
+  _handleIndexChange = index => this.setState({ index });
+  _renderHeader = props =>
+  <TabBar
+    {...props}  style={{ paddingTop: 5, backgroundColor: 'white' }} labelStyle={{ color: '#191919' }}
+    indicatorStyle={{ backgroundColor: 'red' }}
+  />;
 
   renderMonster = ({ item }) => {
     let src = MonsterImages['Unknown'];
@@ -126,64 +126,41 @@ class MonsterScreen extends Component {
     );
   }
 
-  render () {
-    var monsters = this.state.allMonsters;
-    var regStyle1 = styles.monsterHeaderTextContainer;
-    var regStyle2 = styles.monsterHeaderTextContainer;
-    var regStyle3 = styles.monsterHeaderTextContainer;
-
-    var textStyle1 = styles.monsterHeaderText;
-    var textStyle2 = styles.monsterHeaderText;
-    var textStyle3 = styles.monsterHeaderText;
-
-    if(this.state.all) {
-      regStyle1 = styles.monsterHeaderTextContainerSelected;
-      textStyle1 = styles.monsterHeaderTextSelected;
-      monsters = this.state.allMonsters;
-    } else if(this.state.large) {
-      regStyle2 = styles.monsterHeaderTextContainerSelected;
-      textStyle2 = styles.monsterHeaderTextSelected;
-      monsters = this.state.largeMonsters;
-    } else {
-      regStyle3 = styles.monsterHeaderTextContainerSelected;
-      textStyle3 = styles.monsterHeaderTextSelected;
-      monsters = this.state.smallMonsters;
-    }
+  renderAll() {
     return (
-      <View style={styles.monsterScreenContainer}>
-        <View style={styles.monsterHeaderContainer}>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.monsterHeaderContainer} onPress={() => this.toggleHeader('all')}>
-            <View style={regStyle1}>
-              <Text style={textStyle1}>All</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.monsterHeaderContainer} onPress={() => this.toggleHeader('large')}>
-            <View style={regStyle2}>
-              <Text style={textStyle2}>Large</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.monsterHeaderContainer} onPress={() => this.toggleHeader('small')}>
-            <View style={regStyle3}>
-              <Text style={textStyle3}>Small</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.monsterListContainer}>
-          <FlatList
-            contentContainerStyle={styles.monsterFlatListContext}
-            style={styles.monsterFlatList}
-            data={monsters}
-            keyExtractor={(item) => item.monster_id}
-            renderItem={this.renderMonster}
-          />
-        </View>
-      </View>
+      <FlatList
+        contentContainerStyle={styles.monsterFlatListContext}
+        style={styles.monsterFlatList}
+        data={this.state.allMonsters}
+        keyExtractor={(item) => item.monster_id}
+        renderItem={this.renderMonster}
+      />
+    );
+  }
+
+  _renderScene = ({ route }) => {
+    switch (route.key) {
+    case 'first':
+      return <MonsterList navigation={this.props.navigation} monsters={this.state.allMonsters} />;
+    case 'second':
+      return <MonsterList navigation={this.props.navigation} monsters={this.state.largeMonsters} />;
+    case 'third':
+      return <MonsterList navigation={this.props.navigation} monsters={this.state.smallMonsters} />;
+    default:
+      return null;
+    }
+  }
+
+  render() {
+    return (
+      <TabViewAnimated
+        style={{ flex: 1, backgroundColor: 'white'}}
+        navigationState={this.state}
+        renderScene={this._renderScene}
+        renderHeader={this._renderHeader}
+        onIndexChange={this._handleIndexChange}
+        initialLayout={initialLayout}
+      />
     );
   }
 }
-
-const mapStateToProps = (state) => {
-  return state;
-};
-
-export default connect(mapStateToProps)(MonsterScreen);

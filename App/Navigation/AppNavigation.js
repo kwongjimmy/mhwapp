@@ -2,6 +2,11 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 import LaunchScreen from '../Containers/LaunchScreen'
 import MonsterScreen from '../Containers/MonsterScreen'
 import MonsterInfoScreen from '../Containers/MonsterInfoScreen'
+import ItemScreen from '../Containers/ItemScreen'
+import ItemInfoScreen from '../Containers/ItemInfoScreen'
+// import EquipScreen from '../Containers/EquipScreen'
+import MonsterInfoScreen2 from '../Containers/MonsterInfoScreen2'
+
 
 import styles from './Styles/NavigationStyles'
 
@@ -25,6 +30,34 @@ const Monsters = StackNavigator(
           fontWeight: '300',
           color: 'black',
           fontSize: 20,
+      },
+      headerTintColor: 'black',
+    },
+  },
+);
+
+const Items = StackNavigator(
+  {
+    Items: {
+      screen : ItemScreen,
+    },
+    ItemInfo: {
+      screen : ItemInfoScreen,
+    },
+  },
+  {
+    // headerMode: 'none',
+    mode: 'modal',
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: 'white',
+
+      },
+      headerTitleStyle: {
+          fontWeight: '300',
+          color: 'black',
+          fontSize: 20,
+          textAlign: 'center'
       },
       headerTintColor: 'black',
     },
@@ -60,7 +93,7 @@ const Monsters = StackNavigator(
 const PrimaryNav = TabNavigator({
   Monsters: { screen: Monsters },
   Equips: { screen: LaunchScreen },
-  Items: { screen: LaunchScreen },
+  Items: { screen: Items },
   Quests: { screen: LaunchScreen },
   Misc: { screen: LaunchScreen },
   }, {

@@ -49,12 +49,12 @@ export default StyleSheet.create({
   },
   monsterFlatList: {
     flex: 1,
-    // paddingTop: 10,
+    paddingTop: 10,
     // backgroundColor: '#191919'
     // backgroundColor: 'white'
   },
   monsterFlatListContext: {
-    // paddingBottom: 10,
+    paddingBottom: 10,
   },
   monsterContainer: {
     flex: 1,

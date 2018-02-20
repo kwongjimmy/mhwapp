@@ -1,9 +1,8 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-  infoScreenContainer: {
+  itemInfoScreenContainer: {
     flex: 1,
-    // backgroundColor: '#191919',
     backgroundColor: 'white',
   },
   headerContainer: {
@@ -44,30 +43,5 @@ export default StyleSheet.create({
   },
   scrollContainer: {
     flex: 10.5,
-    // backgroundColor: '#191919',
-  },
-  monsterHitContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  monsterHitText: {
-    flex: 1,
-    fontSize: 13,
-    color: '#191919',
-    paddingTop: 5,
-    paddingBottom: 5,
-    textAlign: 'center',
-  },
-  monsterExtractContainer: {
-    borderRadius: 25,
-    borderWidth: 1,
-    borderColor: '#191919',
-    height: 15,
-    width: 15,
-  },
-  monsterFlatListContext: {
-    paddingBottom: 5,
   },
 });

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { ScrollView, Text, Image, View, FlatList, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { ScrollView, Text, Image, View, FlatList, TouchableOpacity, TouchableHighlight, Dimensions } from 'react-native'
 import SQLite from 'react-native-sqlite-storage'
+import { TabViewAnimated, TabBar, SceneMap } from 'react-native-tab-view';
+
 // import MonsterInfo from './MonsterInfo'
 import { Images, ElementStatusImages } from '../Themes'
-// import { renderTab1 } from './MonsterInfo'
 import MonsterInfo from './MonsterInfo'
 import MonsterLoot from './MonsterLoot'
 import MonsterEquip from './MonsterEquip'
@@ -12,31 +13,21 @@ import MonsterQuest from './MonsterQuest'
 // Styles
 import styles from './Styles/MonsterInfoScreenStyles'
 
-export default class MonsterInfoScreen extends Component {
+const initialLayout = {
+  height: 0,
+  width: Dimensions.get('window').width,
+};
+
+export default class MonsterInfoScreen2 extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.monster_name,
     tabBarLabel: 'Monsters',
-    // tabBarVisible: false,
     headerStyle: {
       elevation: 0,
       shadowOpacity: 0,
     },
-    // header: navigation => ({
-    //   style: {
-    //     height: 80,
-    //     backgroundColor: 'yellow',
-    //     shadowColor: 'black',
-    //     shadowRadius: 5,
-    //     shadowOpacity: 0.1,
-    //     shadowOffset: {
-    //       height: 3,
-    //       width: 0,
-    //     },
-    //   },
-    //   titleStyle: { color: 'red' },
-    //   left: <Text style={{color: 'red'}} onPress={() => navigation.goBack()}>LEFT</Text>,
-    //   right: <Text style={{color: 'red'}} onPress={() => navigation.goBack()}>RIGHT</Text>,
-    // })
+    header: null,
+    headerMode: 'none',
   });
 
   constructor(props) {
@@ -52,7 +43,12 @@ export default class MonsterInfoScreen extends Component {
       tab2: false,
       tab3: false,
       tab4: false,
-      loading: true,
+      routes: [
+        { key: 'first', title: 'Info' },
+        { key: 'second', title: 'Loot' },
+        { key: 'third', title: 'Equip' },
+        { key: 'four', title: 'Quest' },
+      ],
     };
     let db = SQLite.openDatabase({name: 'mhworld.db', createFromLocation : "~mhworld.db", location: 'Library'});
     db.transaction((tx) => {
@@ -172,7 +168,7 @@ export default class MonsterInfoScreen extends Component {
           let row = results.rows.item(i);
           monster_quest.push(row);
         }
-        this.setState({ monster_hit, monster_loot, monster_loot_high, monster_armor, monster_weapons, monster_quest, loading: false });
+        this.setState({ monster_hit, monster_loot, monster_loot_high, monster_armor, monster_weapons, monster_quest });
         db.close();
       });
     });
@@ -190,22 +186,69 @@ export default class MonsterInfoScreen extends Component {
     }
   }
 
-  renderContent() {
-    if(this.state.loading) {
-      return <Text>Loading</Text>
-    }
-    if(this.state.tab1) {
-      return <MonsterInfo navigation={this.props.navigation} monster_hit={this.state.monster_hit}/>
-    } else if(this.state.tab2) {
+  // renderContent() {
+  //   if(this.state.tab1) {
+  //     return renderTab1(this.state.monster_hit);
+  //   } else if(this.state.tab2) {
+  //     // return this.renderTab2();
+  //     return <MonsterLoot navigation={this.props.navigation} monster_loot={this.state.monster_loot} monster_loot_high={this.state.monster_loot_high}/>
+  //   } else if(this.state.tab3) {
+  //     return (
+  //       <MonsterEquip navigation={this.props.navigation} monster_armor={this.state.monster_armor} monster_weapons={this.state.monster_weapons}/>
+  //     );
+  //   }
+  //   return (
+  //     <MonsterQuest navigation={this.props.navigation} monster_quest={this.state.monster_quest} />
+  //   )
+  // }
+
+  _renderScene = ({ route }) => {
+    console.log(route.key);
+    switch (route.key) {
+    case 'first':
+      return <MonsterInfo navigation={this.props.navigation} monsters={this.state.monster_hit} />;
+    case 'second':
       return <MonsterLoot navigation={this.props.navigation} monster_loot={this.state.monster_loot} monster_loot_high={this.state.monster_loot_high}/>
-    } else if(this.state.tab3) {
+    case 'third':
       return <MonsterEquip navigation={this.props.navigation} monster_armor={this.state.monster_armor} monster_weapons={this.state.monster_weapons}/>
+    case 'fourth':
+      return <MonsterQuest navigation={this.props.navigation} monster_quest={this.state.monster_quest} />
+    default:
+      return null;
     }
-    return (
-      <MonsterQuest navigation={this.props.navigation} monster_quest={this.state.monster_quest} />
-    )
   }
 
+  _handleIndexChange = index => this.setState({ index });
+  _renderHeader = (props) => {
+    return (
+      <TabBar
+        {...props}  style={{ paddingTop: 5, backgroundColor: 'white' }} labelStyle={{ color: '#191919' }}
+        indicatorStyle={{ backgroundColor: 'red' }}
+        useNativeDriver={false}
+        scrollEnabled={false}
+      />
+    );
+  }
+
+  renderTab() {
+    if(this.state.monster_hit.length > 1) {
+      return (
+        <TabViewAnimated
+          style={{ flex: 1, backgroundColor: 'white'}}
+          navigationState={this.state}
+          renderScene={this._renderScene}
+          renderHeader={this._renderHeader}
+          onIndexChange={this._handleIndexChange}
+          initialLayout={initialLayout}
+        />
+      )
+    }
+    return (
+      <Text>
+        Hi
+      </Text>
+    )
+  }
   render() {
     var regStyle1 = styles.headerTextContainer;
     var regStyle2 = styles.headerTextContainer;
@@ -232,33 +275,37 @@ export default class MonsterInfoScreen extends Component {
     }
 
     return (
-      <View style={styles.infoScreenContainer}>
-        <View style={styles.headerContainer}>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab1')}>
-            <View style={regStyle1}>
-              <Text style={textStyle1}>Info</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab2')}>
-            <View style={regStyle2}>
-              <Text style={textStyle2}>Loot</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab3')}>
-            <View style={regStyle3}>
-              <Text style={textStyle3}>Equip</Text>
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab4')}>
-            <View style={regStyle4}>
-              <Text style={textStyle4}>Quest</Text>
-            </View>
-          </TouchableHighlight>
-        </View>
-        <View style={styles.scrollContainer}>
-          {this.renderContent()}
-        </View>
+      // <View style={styles.infoScreenContainer}>
+      //   <View style={styles.headerContainer}>
+      //     <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab1')}>
+      //       <View style={regStyle1}>
+      //         <Text style={textStyle1}>Info</Text>
+      //       </View>
+      //     </TouchableHighlight>
+      //     <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab2')}>
+      //       <View style={regStyle2}>
+      //         <Text style={textStyle2}>Loot</Text>
+      //       </View>
+      //     </TouchableHighlight>
+      //     <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab3')}>
+      //       <View style={regStyle3}>
+      //         <Text style={textStyle3}>Equip</Text>
+      //       </View>
+      //     </TouchableHighlight>
+      //     <TouchableHighlight activeOpacity={0.5} underlayColor={'white'} style={styles.headerContainer} onPress={() => this.toggleHeader('tab4')}>
+      //       <View style={regStyle4}>
+      //         <Text style={textStyle4}>Quest</Text>
+      //       </View>
+      //     </TouchableHighlight>
+      //   </View>
+      //   <View style={styles.scrollContainer}>
+      //     {this.renderContent()}
+      //   </View>
+      // </View>
+      <View>
+        {this.renderTab()}
       </View>
+
    );
   }
 }
