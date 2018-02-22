@@ -28,7 +28,7 @@ class ItemScreen extends Component {
         item_id: 0,
         first: true,
       }];
-      tx.executeSql('SELECT item_id, name FROM items', [], (tx, results) => {
+      tx.executeSql('SELECT item_id, name FROM items ORDER BY item_id', [], (tx, results) => {
         // Get rows with Web SQL Database spec compliance.
         let len = results.rows.length;
         for (let i = 0; i < len; i++) {

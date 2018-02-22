@@ -8,10 +8,12 @@ export default class MonsterEquip extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      armor: true
+      armor: true,
+      data: this.props.monster_armor,
     }
   }
-  renderListHeader = (item) => {
+
+  renderHeader() {
     if(this.state.armor) {
       return (
         <View style={{ paddingTop: 10, paddingBottom: 7.5, flex: 1, flexDirection: 'row', borderColor: 'red', borderBottomWidth: 1, alignItems: 'center', marginLeft: 7.5, marginRight: 7.5 }}>
@@ -55,7 +57,7 @@ export default class MonsterEquip extends Component {
     }
   }
 
-  renderListItems = (item) => {
+  renderListItems = ({ item }) => {
     return (
       <View style={{ paddingTop: 5, flex: 1, flexDirection: 'row', borderColor: 'red', borderBottomWidth: 0, alignItems: 'center', marginLeft: 7.5, marginRight: 7.5 }}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', borderWidth: 0}}>
@@ -65,38 +67,21 @@ export default class MonsterEquip extends Component {
     );
   }
 
-  renderMonsterLoot = ({ item }) => {
-    if(item.item_id === 0) {
-      return this.renderListHeader();
-    }
-    return this.renderListItems(item);
-  }
-
   toggleEquip = (text) => {
     if(text === 'armor' && !this.state.armor) {
-      this.setState({ armor: true });
+      this.setState({ armor: true, data: this.props.monster_armor });
     } else if(text === 'weapons' && this.state.armor){
-      this.setState({ armor: false });
+      this.setState({ armor: false, data: this.props.monster_weapons });
     }
   }
 
   render() {
-    if(this.state.armor) {
-      return (
-        <FlatList
-          style={{ marginBottom: 5 }}
-          data={this.props.monster_armor}
-          keyExtractor={(item) => item.item_id}
-          renderItem={this.renderMonsterLoot}
-        />
-      );
-    }
     return (
       <FlatList
-        style={{ marginBottom: 5 }}
-        data={this.props.monster_weapons}
+        ListHeaderComponent={this.renderHeader.bind(this)}
+        data={this.state.data}
         keyExtractor={(item) => item.item_id}
-        renderItem={this.renderMonsterLoot}
+        renderItem={this.renderListItems}
       />
     );
   }

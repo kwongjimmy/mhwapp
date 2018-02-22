@@ -4,9 +4,7 @@ import MonsterScreen from '../Containers/MonsterScreen'
 import MonsterInfoScreen from '../Containers/MonsterInfoScreen'
 import ItemScreen from '../Containers/ItemScreen'
 import ItemInfoScreen from '../Containers/ItemInfoScreen'
-// import EquipScreen from '../Containers/EquipScreen'
-import MonsterInfoScreen2 from '../Containers/MonsterInfoScreen2'
-
+import EquipScreen from '../Containers/EquipScreen'
 
 import styles from './Styles/NavigationStyles'
 
@@ -64,6 +62,31 @@ const Items = StackNavigator(
   },
 );
 
+const Equips = StackNavigator(
+  {
+    Equips: {
+      screen : EquipScreen,
+    },
+  },
+  {
+    // headerMode: 'none',
+    mode: 'modal',
+    navigationOptions: {
+      headerStyle: {
+        backgroundColor: 'white',
+
+      },
+      headerTitleStyle: {
+          fontWeight: '300',
+          color: 'black',
+          fontSize: 20,
+          textAlign: 'center'
+      },
+      headerTintColor: 'black',
+    },
+  },
+);
+
 // const Monsterss = TabNavigator({
 //   Large: { screen: MonsterScreen },
 //   Small: { screen: MonsterScreen },
@@ -92,7 +115,7 @@ const Items = StackNavigator(
 
 const PrimaryNav = TabNavigator({
   Monsters: { screen: Monsters },
-  Equips: { screen: LaunchScreen },
+  Equips: { screen: Equips },
   Items: { screen: Items },
   Quests: { screen: LaunchScreen },
   Misc: { screen: LaunchScreen },

@@ -20,14 +20,14 @@ export default class MonsterList extends PureComponent {
 
   renderMonster = ({ item }) => {
     let src = MonsterImages['Unknown'];
-    let name = item.name;
-    if(item.name !== 'Gajalaka' && item.name !== 'Grimalkyne') {
+    let name = item.monster_name;
+    if(name !== 'Gajalaka' && name !== 'Grimalkyne') {
       name = name.replace(/["'-]/g, "");
       name = name.replace(' ', '');
       src = MonsterImages[name];
     }
     return (
-      <TouchableHighlight style={styles.monsterTouchContainer2} activeOpacity={0.5} underlayColor={'white'} onPress={() => this.props.navigation.navigate('MonsterInfo', { monster_id: item.monster_id, monster_name: item.name })}>
+      <TouchableHighlight style={styles.monsterTouchContainer2} activeOpacity={0.5} underlayColor={'white'} onPress={() => this.props.navigation.navigate('MonsterInfo', { monster_id: item.monster_id, monster_name: item.monster_name })}>
         <View style={styles.monsterContainer}>
           <View style={styles.monsterImageContainer}>
             <Image
@@ -37,8 +37,8 @@ export default class MonsterList extends PureComponent {
             />
           </View>
           <View style={styles.monsterTextContainer}>
-            <Text style={styles.monsterText}>{item.name}</Text>
-            <Text style={styles.monsterTypeText}>{item.category}</Text>
+            <Text style={styles.monsterText}>{item.monster_name}</Text>
+            <Text style={styles.monsterTypeText}>{item.type}</Text>
           </View>
         </View>
       </TouchableHighlight>

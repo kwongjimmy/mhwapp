@@ -8,10 +8,12 @@ export default class MonsterLoot extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      lowrank: true
+      lowrank: true,
+      data: this.props.monster_loot
     }
   }
-  renderListHeader = (item) => {
+
+  renderHeader() {
     if(this.state.lowrank) {
       return (
         <View style={{ paddingTop: 10, paddingBottom: 7.5, flex: 1, flexDirection: 'row', borderColor: 'red', borderBottomWidth: 1, alignItems: 'center', marginLeft: 7.5, marginRight: 7.5 }}>
@@ -55,9 +57,9 @@ export default class MonsterLoot extends Component {
     }
   }
 
-  renderListItems = (item) => {
+  renderListItems = ({ item }) => {
     return (
-      <View style={{ paddingTop: 5, flex: 1, flexDirection: 'row', borderColor: 'red', borderBottomWidth: 0, alignItems: 'center', marginLeft: 7.5, marginRight: 7.5 }}>
+      <View style={{ paddingBottom: 5, flex: 1, flexDirection: 'row', borderColor: 'red', borderBottomWidth: 0, alignItems: 'center', marginLeft: 7.5, marginRight: 7.5 }}>
         <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', borderWidth: 0}}>
           <Text style={{ fontSize: 15.5, flex: 1, textAlign: 'center', color: '#191919' }}>{item.name}</Text>
         </View>
@@ -72,36 +74,21 @@ export default class MonsterLoot extends Component {
     );
   }
 
-  renderMonsterLoot = ({ item }) => {
-    if(item.loot_id === 0) {
-      return this.renderListHeader();
-    }
-    return this.renderListItems(item);
-  }
-
   toggleRank = (text) => {
     if(text === 'low' && !this.state.lowrank) {
-      this.setState({ lowrank: true });
+      this.setState({ lowrank: true, data: this.props.monster_loot });
     } else if(text === 'high' && this.state.lowrank){
-      this.setState({ lowrank: false });
+      this.setState({ lowrank: false, data: this.props.monster_loot_high });
     }
   }
 
   render() {
-    if(this.state.lowrank) {
-      return (
-        <FlatList
-          data={this.props.monster_loot}
-          keyExtractor={(item) => item.loot_id}
-          renderItem={this.renderMonsterLoot}
-        />
-      );
-    }
     return (
       <FlatList
-        data={this.props.monster_loot_high}
+        ListHeaderComponent={this.renderHeader.bind(this)}
+        data={this.state.data}
         keyExtractor={(item) => item.loot_id}
-        renderItem={this.renderMonsterLoot}
+        renderItem={this.renderListItems}
       />
     );
   }

@@ -6,84 +6,85 @@ import { Images, ElementStatusImages } from '../Themes'
 
 export default class MonsterInfo extends Component {
 
-  renderMonsterHit = ({ item }) => {
-    if(item.first) {
-      return (
-        <View style={[styles.monsterHitContainer, { paddingTop: 10, paddingBottom: 5, borderColor: 'red', borderBottomWidth: 1, marginLeft: 7.5, marginRight: 7.5 }]}>
-          <Text style={[styles.monsterHitText, { flex: 2 }]}>{item.part_name}</Text>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Sever}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Blunt}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Shot}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Stun}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Fire}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Water}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Ice}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Thunder}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Dragon}
-            />
-          </View>
-          <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
-            <Image
-              resizeMode="contain"
-              style={{ height: 22.5, width: 22.5}}
-              source={ElementStatusImages.Extract}
-            />
-          </View>
+  renderHeader() {
+    return (
+      <View style={[styles.monsterHitContainer, { paddingTop: 10, paddingBottom: 5, borderColor: 'red', borderBottomWidth: 1, marginLeft: 7.5, marginRight: 7.5 }]}>
+        <Text style={[styles.monsterHitText, { flex: 2 }]}>{''}</Text>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Sever}
+          />
         </View>
-      );
-    }
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Blunt}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Shot}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Stun}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Fire}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Water}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Ice}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Thunder}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Dragon}
+          />
+        </View>
+        <View style={{ flex: 1, borderWidth: 0, alignItems: 'center' }}>
+          <Image
+            resizeMode="contain"
+            style={{ height: 22.5, width: 22.5}}
+            source={ElementStatusImages.Extract}
+          />
+        </View>
+      </View>
+    );
+  }
+
+  renderListItems = ({ item }) => {
     return (
       <View style={[styles.monsterHitContainer, { marginLeft: 7.5, marginRight: 7.5 }]}>
         <Text style={[styles.monsterHitText, { flex: 2 }]}>{item.part_name}</Text>
@@ -106,9 +107,10 @@ export default class MonsterInfo extends Component {
   render() {
     return (
       <FlatList
+        ListHeaderComponent={this.renderHeader.bind(this)}
         data={this.props.monster_hit}
         keyExtractor={(item) => item.part_name}
-        renderItem={this.renderMonsterHit}
+        renderItem={this.renderListItems}
       />
     );
   }
